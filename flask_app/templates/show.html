@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Exam</title>
+</head>
+<body>
+    <div id=wrapper>
+        <header>
+            <h1 id=head>Are you ready for your trip to {{ride.destination}}</h1>
+            <a class=navLink href="/landing">Home</a>
+            <a class=navLink href="/logout">LOGOUT</a>
+        </header>
+        <h2>Who's driving: {{ride.driver.first_name}}</h2>
+        <h2>Who's riding: {{ride.passenger.first_name}}</h2>
+        <h2>When: {{ride.ride_date}}</h2>
+        <h2>Pick Up Where: {{ride.pick_up}}</h2>
+        <h2>Details: {{ride.details}}</h2>
+            <a class="navLink" href="/ride/edit/{{ride.id}}">Edit</a> |
+            <a class="navLink" href="/ride/delete/{{ride.id}}">Delete</a>
+        <div>
+            <h2>Ride Messages:</h2>
+            {% for message in ride_messages %}
+                <p>{{message.sender.first_name}}: {{message.content}}</p>
+            {% endfor %}
+            <form action="/message/create/{{ride.id}}" method="post">
+                <input type="text" name="content">
+                <button type="submit">Send Messages</button>
+
+            </form>
+        </div>
+</div>
+</body>
+</html>

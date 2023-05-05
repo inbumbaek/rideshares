@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Exam</title>
+</head>
+<body>
+    <div id=wrapper>
+        <div id=regForm></div>
+            <h2 class=subHead>Register</h2>
+            <form action="/register" method='POST'>
+                {% with messages = get_flashed_messages(category_filter=['regError']) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="error">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="formGroup">
+                    <label for="first_name">First Name: </label>
+                    <input class=formInput type="text" name="first_name">
+                </div>
+                <div class="formGroup">
+                    <label for="last_name">Last Name: </label>
+                    <input class=formInput type="text" name="last_name">
+                </div>
+                <div class="formGroup">
+                    <label for="email">Email: </label>
+                    <input class=formInput type="text" name="email">
+                </div>
+                <div class="formGroup">
+                    <label>Password: </label>
+                    <input class=formInput type="password" name="password">
+                </div>
+                <div class="formGroup">
+                    <label>Confirn Password: </label>
+                    <input class=formInput type="password" name="passConf">
+                </div>
+                <button class=formButton>Register</button>
+            </form>
+        </div>
+        <div id="loginForm">
+            <h2 class=subHead>Login</h2>
+            <form action="/login" method="POST">
+                {% with messages = get_flashed_messages(category_filter=['logError']) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="error">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="formGroup">
+                    <label>Email: </label>
+                    <input class=formInput type="text" name="email">
+                </div>
+                <div class="formGroup">
+                    <label>Password: </label>
+                    <input class=formInput type="password" name="password">
+                </div>
+                <button class=formButton>Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Exam</title>
+</head>
+<body>
+    <div id=wrapper>
+        <header>
+            <h1 id=head>Welcome {{user.first_name}}</h1>
+            <a class=navLink href="/ride/new">Request A Ride</a>
+            <a class=navLink href="/logout">LOGOUT</a>
+        </header>
+        <div class="displayColumn">
+            {% for ride in requests %}
+            <div class="rideCard">
+                <p>Rider: {{ride.passenger.first_name}}</p>
+                <p>Destination: {{ride.destination}}</p>
+                <p>When: {{ride.ride_date}}</p>
+                {% if ride.passenger.id == session['user_id'] %}
+                <a class="navLink" href="/ride/delete/{{ride.id}}">Delete</a>
+                {% else %}
+                <a class="navLink" href="/ride/drive/{{ride.id}}">I Can Drive</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="displayColumn">
+            {% for ride in booked %}
+                <div class="rideCard">
+                    {% if ride.passenger_id == session['user_id'] %}
+                    <p>You are riding with {{ride.driver.first_name}} to {{ride.destination}} 
+                    on {{ride.ride_date}}</p>
+                    <a class="navLink" href="/ride/show/{{ride.id}}">Details</a>
+                    {% elif ride.driver_id == session['user_id'] %}
+                    <p>You are driving {{ride.passenger.first_name}} to {{ride.destination}} 
+                    on {{ride.ride_date}}</p>
+                    <a class="navLink" href="/ride/show/{{ride.id}}">Details</a> | 
+                    <a class="navLink" href="/ride/cancel/{{ride.id}}">Cancel</a>
+                    {% else %}
+                    <p>{{ride.driver.first_name}} is driving {{ride.passenger.first_name}} 
+                    to {{ride.destination}} on {{ride.ride_date}}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

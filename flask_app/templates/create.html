@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Exam</title>
+</head>
+<body>
+    <div id=wrapper>
+        <header>
+            <h1 id=head>Request A Ride</h1>
+            <a class=navLink href="/landing">Home</a>
+            <a class=navLink href="/logout">LOGOUT</a>
+        </header>
+        <div id=regForm>
+            <form action="/ride/create" method='POST'>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="error">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="formGroup">
+                    <label for="destination">Destination: </label>
+                    <input class=formInput type="text" name="destination">
+                </div>
+                <div class="formGroup">
+                    <label for="pick_up">Pick Up Location: </label>
+                    <input class=formInput type="text" name="pick_up">
+                </div>
+                <div class="formGroup">
+                    <label for="ride_date">Rideshare Date: </label>
+                    <input class=formInput type="date" name="ride_date">
+                </div>
+                <div class="formGroup">
+                    <label for="details">Details: </label>
+                    <textarea class=formInput type="text" name="details"></textarea>
+                </div>
+                <button class=formButton>Post</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
